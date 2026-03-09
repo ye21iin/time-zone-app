@@ -1,3 +1,21 @@
+// // src/app/page.tsx --- test
+// import { supabase } from "@/lib/supabase";
+
+// export default async function Home() {
+//   // DB에서 데이터 읽어오기 (테스트)
+//   const { data, error } = await supabase.from("friends").select("*");
+
+//   return (
+//     <main className="p-10">
+//       <h1 className="text-2xl font-bold">Supabase Connection Test</h1>
+//       {error ? (
+//         <p className="text-red-500">Error: {error.message}</p>
+//       ) : (
+//         <pre>{JSON.stringify(data, null, 2)}</pre>
+//       )}
+//     </main>
+//   );
+// }
 import Image from "next/image";
 
 export default function Home() {
