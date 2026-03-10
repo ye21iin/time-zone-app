@@ -1,7 +1,8 @@
-import { supabase } from "@/lib/supabase";
 import TimeCard from "@/components/TimeCard";
+import { createClient } from "@/lib/supabase/server";
 
 export default async function Home() {
+  const supabase = await createClient();
   const { data: friends } = await supabase.from("friends").select("*");
 
   return (
