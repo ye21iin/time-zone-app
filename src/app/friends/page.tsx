@@ -1,5 +1,6 @@
 // src/app/friends/page.tsx
 import TimeCard from "@/components/TimeCard";
+import { USER_CITY, USER_TIMEZONE } from "@/lib/constant";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
@@ -24,11 +25,21 @@ export default async function FriendsPage() {
 
   return (
     <main className="min-h-screen bg-gray-50 p-8 md:p-12">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-extrabold text-gray-900">내 친구들</h1>
-        {/* 여기에 친구 추가 버튼이나 로그아웃 버튼을 넣으면 좋겠죠? */}
-      </div>
+      {/* 1. 나의 고정 카드 섹션 */}
+      <section className="mb-12">
+        <h2 className="text-xl font-bold text-gray-700 mb-4">현재 나의 시간</h2>
+        <div className="max-w-sm">
+          <TimeCard
+            isMe={true}
+            name="나"
+            city={USER_CITY}
+            timezone={USER_TIMEZONE}
+          />
+        </div>
+      </section>
 
+      {/* 2. 친구 목록 섹션 */}
+      <h1 className="text-3xl font-extrabold text-gray-900 mb-8">친구들</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {friends?.length ? (
           friends.map((friend) => (
