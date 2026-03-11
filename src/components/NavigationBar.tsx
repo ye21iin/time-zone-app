@@ -20,6 +20,12 @@ export default async function Navbar() {
           <div className="flex items-center gap-4">
             {user ? (
               <>
+                <Link
+                  href="/friends/add"
+                  className="text-sm bg-blue-50 text-blue-600 px-3 py-1 rounded-full hover:bg-blue-100"
+                >
+                  + 친구 추가
+                </Link>
                 <span className="text-sm text-gray-500">{user.email}</span>
                 <LogoutButton />
               </>
