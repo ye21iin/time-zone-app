@@ -38,7 +38,7 @@ export async function middleware(request: NextRequest) {
 
   // 로그인 안 된 유저가 /friends에 접속하려고 하면 로그인 페이지로 리다이렉트
   if (!user && request.nextUrl.pathname.startsWith("/friends")) {
-    return NextResponse.redirect(new URL("/login", request.url));
+    return NextResponse.redirect(new URL("/auth/login", request.url));
   }
 
   return response;

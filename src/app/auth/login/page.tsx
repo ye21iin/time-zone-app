@@ -17,7 +17,7 @@ export default function LoginPage() {
     <div className="flex justify-center items-center h-screen">
       <button
         onClick={handleGoogleLogin}
-        className="bg-white border border-gray-300 p-4 rounded-lg shadow-sm hover:bg-gray-50"
+        className="border border-gray-300 p-4 rounded-lg shadow-sm hover:bg-gray-500"
       >
         Google로 로그인하기
       </button>
