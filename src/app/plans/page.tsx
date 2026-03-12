@@ -2,6 +2,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { USER_TIMEZONE } from "@/lib/constant";
 import { redirect } from "next/navigation";
+import Link from "next/link";
 
 export default async function PlansPage() {
   const supabase = await createClient();
@@ -18,10 +19,6 @@ export default async function PlansPage() {
     .eq("user_id", user.id)
     .order("start_time", { ascending: true });
 
-  if (plans) {
-    console.log(plans);
-  }
-
   return (
     <main className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-4xl mx-auto">
@@ -29,9 +26,12 @@ export default async function PlansPage() {
           <h1 className="text-3xl font-bold text-gray-900">
             내 일정 (밴쿠버 기준)
           </h1>
-          <button className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition">
+          <Link
+            href="/plans/add"
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition"
+          >
             + 일정 추가
-          </button>
+          </Link>
         </div>
 
         <div className="space-y-4">
