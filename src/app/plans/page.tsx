@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { USER_TIMEZONE } from "@/lib/constant";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import DeletePlanButton from "@/components/DeletePlanButton";
 
 export default async function PlansPage() {
   const supabase = await createClient();
@@ -47,8 +48,9 @@ export default async function PlansPage() {
               return (
                 <div
                   key={plan.id}
-                  className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex justify-between items-center"
+                  className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex justify-between items-start" // items-center에서 items-start로 변경 제안
                 >
+                  {/* 왼쪽: 주요 정보 */}
                   <div>
                     <h3 className="text-xl font-bold text-gray-800">
                       {plan.title}
@@ -57,13 +59,23 @@ export default async function PlansPage() {
                       🇨🇦 밴쿠버: {vancouverTime}
                     </p>
                   </div>
-                  <div className="text-right">
-                    <span className="text-xs font-semibold text-gray-400 uppercase tracking-widest">
-                      UTC 기준
-                    </span>
-                    <p className="text-sm text-gray-500 font-mono">
-                      {new Date(plan.start_time).toUTCString()}
-                    </p>
+
+                  {/* 오른쪽: 메타 정보 및 액션 버튼 */}
+                  <div className="text-right flex flex-col justify-between h-full min-h-[80px]">
+                    <div>
+                      <span className="text-xs font-semibold text-gray-400 uppercase tracking-widest">
+                        UTC 기준
+                      </span>
+                      <p className="text-sm text-gray-500 font-mono">
+                        {new Date(plan.start_time).toUTCString()}
+                      </p>
+                    </div>
+
+                    {/* 삭제 버튼 추가 영역 */}
+                    <div className="mt-4 flex justify-end gap-2">
+                      {/* 나중에 수정 버튼도 여기에 추가하면 좋습니다 */}
+                      <DeletePlanButton planId={plan.id} />
+                    </div>
                   </div>
                 </div>
               );
