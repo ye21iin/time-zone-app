@@ -1,4 +1,5 @@
 // src/app/friends/page.tsx
+import DeleteFriendButton from "@/components/DeleteFriendButton";
 import TimeCard from "@/components/TimeCard";
 import { USER_CITY, USER_TIMEZONE } from "@/lib/constant";
 import { createClient } from "@/lib/supabase/server";
@@ -43,17 +44,24 @@ export default async function FriendsPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {friends?.length ? (
           friends.map((friend) => (
-            <TimeCard
-              key={friend.id}
-              name={friend.name}
-              city={friend.city}
-              timezone={friend.city_timezone}
-            />
+            // 1. group 클래스를 추가하여 마우스 오버 효과 준비
+            <div key={friend.id} className="relative group">
+              <TimeCard
+                name={friend.name}
+                city={friend.city}
+                timezone={friend.city_timezone}
+              />
+
+              {/* 2. 카드 우측 하단에 삭제 버튼 배치 */}
+              {/* top-4 right-4 대신 bottom-4 right-4를 사용하여 이모지와 겹침 방지 */}
+              <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-end gap-1">
+                {/* 필요한 경우 수정 버튼을 여기에 추가할 수 있습니다 */}
+                <DeleteFriendButton friendId={friend.id} name={friend.name} />
+              </div>
+            </div>
           ))
         ) : (
-          <p className="text-gray-500">
-            아직 등록된 친구가 없습니다. 친구를 추가해보세요!
-          </p>
+          <p className="text-gray-500">아직 등록된 친구가 없습니다.</p>
         )}
       </div>
     </main>
