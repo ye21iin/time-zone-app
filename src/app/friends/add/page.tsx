@@ -49,71 +49,72 @@ export default function AddFriendPage() {
   };
 
   return (
-    <main className="max-w-md mx-auto mt-12 p-6 bg-white rounded-xl shadow-md border border-gray-100">
-      <h1 className="text-2xl font-bold mb-6 text-gray-800 text-center">
-        새 친구 추가
-      </h1>
-      <form onSubmit={handleSubmit} className="space-y-5">
-        <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1">
-            친구 이름
-          </label>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="w-full p-2.5 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all"
-            placeholder="예: 나나"
-            required
-          />
-        </div>
+    <main className="min-h-screen bg-gray-50 p-8">
+      <section className="max-w-md mx-auto mt-12 p-8 bg-white rounded-2xl shadow-sm border border-gray-100">
+        <h1 className="text-2xl font-bold mb-8 text-gray-800 text-center">
+          새 친구 추가
+        </h1>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              친구 이름
+            </label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all text-gray-900 placeholder:text-gray-400"
+              placeholder="예: 나나"
+              required
+            />
+          </div>
 
-        <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1">
-            거주 도시
-          </label>
-          <input
-            type="text"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-            className="w-full p-2.5 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all"
-            placeholder="예: Tokyo"
-            required
-          />
-        </div>
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              거주 도시
+            </label>
+            <input
+              type="text"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+              className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all text-gray-900 placeholder:text-gray-400"
+              placeholder="예: Tokyo"
+              required
+            />
+          </div>
 
-        <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1">
-            타임존 선택
-          </label>
-          <select
-            value={timezone}
-            onChange={(e) => setTimezone(e.target.value)}
-            className="w-full p-2.5 border rounded-lg bg-white focus:ring-2 focus:ring-blue-500 outline-none transition-all cursor-pointer"
-            required
-          >
-            <option value="" disabled>
-              타임존을 검색하거나 선택하세요
-            </option>
-            {timeZones.map((tz) => (
-              <option key={tz} value={tz}>
-                {tz}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              타임존 선택
+            </label>
+            <select
+              value={timezone}
+              onChange={(e) => setTimezone(e.target.value)}
+              className={`w-full p-3 border border-gray-200 rounded-xl bg-white focus:ring-2 focus:ring-blue-500 outline-none cursor-pointer transition-all ${
+                timezone ? "text-gray-900" : "text-gray-400"
+              }`}
+              required
+            >
+              <option value="" disabled>
+                타임존을 선택하세요
               </option>
-            ))}
-          </select>
-          <p className="mt-1 text-xs text-gray-400 font-light">
-            * 리스트에서 도시가 속한 타임존을 선택하세요.
-          </p>
-        </div>
+              {timeZones.map((tz) => (
+                <option key={tz} value={tz} className="text-gray-900">
+                  {tz}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 disabled:bg-gray-300 transition-colors shadow-sm"
-        >
-          {loading ? "저장 중..." : "친구 등록하기"}
-        </button>
-      </form>
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-blue-600 text-white py-4 rounded-xl font-bold hover:bg-blue-700 disabled:bg-gray-300 transition-all shadow-md"
+          >
+            {loading ? "저장 중..." : "친구 등록하기"}
+          </button>
+        </form>
+      </section>
     </main>
   );
 }
