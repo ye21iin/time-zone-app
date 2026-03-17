@@ -2,8 +2,8 @@
 import { createClient } from "@/lib/supabase/server";
 import { USER_TIMEZONE } from "@/lib/constant";
 import { redirect } from "next/navigation";
-import Link from "next/link";
 import DeletePlanButton from "@/components/DeletePlanButton";
+import PrimaryLinkButton from "@/components/PrimaryLinkButton";
 
 export default async function PlansPage() {
   const supabase = await createClient();
@@ -27,12 +27,9 @@ export default async function PlansPage() {
           <h1 className="text-3xl font-bold text-gray-900">
             내 일정 (밴쿠버 기준)
           </h1>
-          <Link
-            href="/plans/add"
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition"
-          >
+          <PrimaryLinkButton href="/plans/add">
             + 일정 추가
-          </Link>
+          </PrimaryLinkButton>
         </div>
 
         <div className="space-y-4">

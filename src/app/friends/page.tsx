@@ -1,5 +1,6 @@
 // src/app/friends/page.tsx
 import DeleteFriendButton from "@/components/DeleteFriendButton";
+import PrimaryLinkButton from "@/components/PrimaryLinkButton";
 import TimeCard from "@/components/TimeCard";
 import { USER_CITY, USER_TIMEZONE } from "@/lib/constant";
 import { createClient } from "@/lib/supabase/server";
@@ -40,7 +41,10 @@ export default async function FriendsPage() {
       </section>
 
       {/* 2. 친구 목록 섹션 */}
-      <h1 className="text-3xl font-extrabold text-gray-900 mb-8">친구들</h1>
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-3xl font-extrabold text-gray-900">친구들</h1>
+        <PrimaryLinkButton href="/friends/add">+ 친구 추가</PrimaryLinkButton>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {friends?.length ? (
           friends.map((friend) => (
