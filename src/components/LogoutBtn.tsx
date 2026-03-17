@@ -10,8 +10,8 @@ export default function LogoutButton() {
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    router.refresh(); // 세션 상태를 새로고침하여 반영
-    router.push("/"); // 메인 페이지로 이동
+    router.refresh();
+    router.push("/");
   };
 
   return (
@@ -19,7 +19,7 @@ export default function LogoutButton() {
       onClick={handleLogout}
       className="text-sm font-medium text-gray-600 hover:text-red-600 transition-colors"
     >
-      로그아웃
+      Log out
     </button>
   );
 }

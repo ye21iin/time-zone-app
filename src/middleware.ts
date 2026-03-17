@@ -36,7 +36,6 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // 로그인 안 된 유저가 /friends에 접속하려고 하면 로그인 페이지로 리다이렉트
   if (!user && request.nextUrl.pathname.startsWith("/friends")) {
     return NextResponse.redirect(new URL("/auth/login", request.url));
   }
@@ -44,9 +43,7 @@ export async function middleware(request: NextRequest) {
   return response;
 }
 
-export default middleware; // Next.js가 실행할 함수를 지정
-
-// 미들웨어를 실행할 경로 설정
+export default middleware;
 export const config = {
   matcher: [
     "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",

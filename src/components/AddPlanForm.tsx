@@ -18,23 +18,19 @@ export default function AddPlanForm({ friends }: { friends: Friend[] }) {
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
-  // 초기에는 사용자가 직접 선택하도록 빈 값으로 시작 (placeholder 노출)
   const [timezone, setTimezone] = useState<string>("");
   const [loading, setLoading] = useState(false);
 
-  // 친구가 없을 때도 일정 추가가 가능하도록 전체 타임존 목록을 fallback으로 제공
   const timeZones = Intl.supportedValuesOf("timeZone").sort();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
 
-    // 사용자가 타임존을 선택하지 않았다면, 현재 유저(브라우저)의 타임존을 기본값으로 사용
     const browserTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     const timezoneToUse = timezone || browserTimezone;
     if (!timezone) setTimezone(timezoneToUse);
 
-    // 현지 시간(선택한 도시 기준)을 UTC로 변환
     const utcDate = convertToUtc(date, time, timezoneToUse);
 
     const supabase = createClient();
@@ -43,7 +39,7 @@ export default function AddPlanForm({ friends }: { friends: Friend[] }) {
     } = await supabase.auth.getUser();
 
     if (!user) {
-      alert("로그인이 필요합니다.");
+      alert("You need to be logged in.");
       setLoading(false);
       return;
     }
@@ -58,33 +54,33 @@ export default function AddPlanForm({ friends }: { friends: Friend[] }) {
     ]);
 
     if (error) {
-      alert("저장 실패: " + error.message);
+      alert("Failed to save: " + error.message);
     } else {
-      alert("일정이 추가되었습니다!");
-      router.push("/plans"); // 저장 후 목록 페이지로 이동
-      router.refresh(); // 목록 새로고침
+      alert("Your plan has been added.");
+      router.push("/plans");
+      router.refresh();
     }
     setLoading(false);
   };
 
   return (
     <FormPage
-      title="새 일정 추가"
+      title="Create a new plan"
       onSubmit={handleSubmit}
-      submitLabel="일정 추가하기"
-      submitLoadingLabel="저장 중..."
+      submitLabel="Save plan"
+      submitLoadingLabel="Saving..."
       loading={loading}
     >
       <div>
         <label className="block text-sm font-semibold text-gray-700 mb-2">
-          일정 이름
+          Title
         </label>
         <input
           type="text"
           value={title}
           required
           className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all text-gray-900 placeholder:text-gray-400"
-          placeholder="예: 팀 미팅"
+          placeholder="e.g. Team meeting"
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setTitle(e.target.value)
           }
@@ -94,7 +90,7 @@ export default function AddPlanForm({ friends }: { friends: Friend[] }) {
       <div className="flex gap-4">
         <div className="flex-1">
           <label className="block text-sm font-semibold text-gray-700 mb-2">
-            날짜
+            Date
           </label>
           <input
             type="date"
@@ -108,7 +104,7 @@ export default function AddPlanForm({ friends }: { friends: Friend[] }) {
         </div>
         <div className="flex-1">
           <label className="block text-sm font-semibold text-gray-700 mb-2">
-            시간
+            Time
           </label>
           <input
             type="time"
@@ -124,7 +120,7 @@ export default function AddPlanForm({ friends }: { friends: Friend[] }) {
 
       <div>
         <label className="block text-sm font-semibold text-gray-700 mb-2">
-          기준 도시 (타임존)
+          Time zone
         </label>
         <select
           value={timezone}
@@ -136,10 +132,10 @@ export default function AddPlanForm({ friends }: { friends: Friend[] }) {
           }`}
         >
           <option value="" disabled>
-            타임존을 선택하세요
+            Select a time zone
           </option>
           {friends.length > 0 ? (
-            <optgroup label="친구 도시">
+            <optgroup label="Friends">
               {friends.map((f) => (
                 <option key={f.id} value={f.city_timezone} className="text-gray-900">
                   {f.name} ({f.city})
@@ -147,7 +143,7 @@ export default function AddPlanForm({ friends }: { friends: Friend[] }) {
               ))}
             </optgroup>
           ) : null}
-          <optgroup label="전체 타임존">
+          <optgroup label="All time zones">
             {timeZones.map((tz) => (
               <option key={tz} value={tz} className="text-gray-900">
                 {tz}

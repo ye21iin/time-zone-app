@@ -14,12 +14,11 @@ export default function AddFriendPage() {
   const supabase = createClient();
   const router = useRouter();
 
-  // 브라우저 내장 기능을 활용해 지원되는 모든 타임존 가져오기 (알파벳순 정렬)
   const timeZones = Intl.supportedValuesOf("timeZone").sort();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!timezone) return alert("타임존을 선택해주세요!");
+    if (!timezone) return alert("Please select a time zone.");
 
     setLoading(true);
     const {
@@ -27,7 +26,7 @@ export default function AddFriendPage() {
     } = await supabase.auth.getUser();
 
     if (!user) {
-      alert("로그인이 필요합니다.");
+      alert("You need to be logged in.");
       return;
     }
 
@@ -41,7 +40,7 @@ export default function AddFriendPage() {
     ]);
 
     if (error) {
-      alert("에러 발생: " + error.message);
+      alert("Something went wrong: " + error.message);
     } else {
       router.push("/friends");
       router.refresh();
@@ -51,15 +50,15 @@ export default function AddFriendPage() {
 
   return (
     <FormPage
-      title="새 친구 추가"
+      title="Add a new friend"
       onSubmit={handleSubmit}
-      submitLabel="친구 등록하기"
-      submitLoadingLabel="저장 중..."
+      submitLabel="Save friend"
+      submitLoadingLabel="Saving..."
       loading={loading}
     >
       <div>
         <label className="block text-sm font-semibold text-gray-700 mb-2">
-          친구 이름
+          Friend name
         </label>
         <input
           type="text"
@@ -68,14 +67,14 @@ export default function AddFriendPage() {
             setName(e.target.value)
           }
           className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all text-gray-900 placeholder:text-gray-400"
-          placeholder="예: 나나"
+          placeholder="e.g. Nana"
           required
         />
       </div>
 
       <div>
         <label className="block text-sm font-semibold text-gray-700 mb-2">
-          거주 도시
+          City
         </label>
         <input
           type="text"
@@ -84,14 +83,14 @@ export default function AddFriendPage() {
             setCity(e.target.value)
           }
           className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all text-gray-900 placeholder:text-gray-400"
-          placeholder="예: Tokyo"
+          placeholder="e.g. Tokyo"
           required
         />
       </div>
 
       <div>
         <label className="block text-sm font-semibold text-gray-700 mb-2">
-          타임존 선택
+          Time zone
         </label>
         <select
           value={timezone}
@@ -104,7 +103,7 @@ export default function AddFriendPage() {
           required
         >
           <option value="" disabled>
-            타임존을 선택하세요
+            Select a time zone
           </option>
           {timeZones.map((tz) => (
             <option key={tz} value={tz} className="text-gray-900">

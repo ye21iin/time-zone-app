@@ -19,7 +19,7 @@ export async function createClient() {
               cookieStore.set(name, value, options)
             );
           } catch {
-            // 서버 액션 등에서 발생하는 에러 무시
+            // intentionally ignore errors that can happen in server actions
           }
         },
       },

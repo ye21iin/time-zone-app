@@ -19,22 +19,21 @@ export default async function Navbar() {
           <div className="flex items-center gap-6">
             {user ? (
               <>
-                {/* 핵심 기능 메뉴 추가 */}
                 <div className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600">
                   <Link href="/friends" className="hover:text-blue-600">
-                    친구 관리
+                    Friends
                   </Link>
                   <Link href="/plans" className="hover:text-blue-600">
-                    일정 목록
+                    Plans
                   </Link>
                   <Link
                     href="/plans/add"
                     className=" text-sm bg-blue-50 text-blue-600 px-3 py-1 rounded-full hover:bg-blue-100"
                   >
-                    + 일정 추가
+                    + New plan
                   </Link>
                 </div>
-                <div className="h-6 w-px bg-gray-200" /> {/* 구분선 */}
+                <div className="h-6 w-px bg-gray-200" />
                 <span className="text-xs text-gray-400 truncate max-w-[200px]">
                   {user.email}
                 </span>
@@ -45,7 +44,7 @@ export default async function Navbar() {
                 href="/auth/login"
                 className="text-sm font-medium text-blue-600"
               >
-                로그인
+                Log in
               </Link>
             )}
           </div>

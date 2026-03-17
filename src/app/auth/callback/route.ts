@@ -8,7 +8,7 @@ export async function GET(request: Request) {
   const origin = requestUrl.origin;
 
   if (code) {
-    const cookieStore = await cookies(); // Next15 부터 cookies() 비동기 함수로 변경
+    const cookieStore = await cookies();
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -23,7 +23,7 @@ export async function GET(request: Request) {
                 cookieStore.set(name, value, options)
               );
             } catch {
-              // 서버 액션 등에서 쿠키를 설정할 때 발생할 수 있는 에러 방지
+              // intentionally ignore errors when setting cookies from server actions
             }
           },
         },

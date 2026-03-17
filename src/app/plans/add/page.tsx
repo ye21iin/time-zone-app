@@ -5,8 +5,6 @@ import { redirect } from "next/navigation";
 
 export default async function AddPlanPage() {
   const supabase = await createClient();
-
-  // 친구 목록을 가져와야 폼에서 도시 선택이 가능합니다.
   const {
     data: { user },
   } = await supabase.auth.getUser();

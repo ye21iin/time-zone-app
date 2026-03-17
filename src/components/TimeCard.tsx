@@ -6,18 +6,18 @@ export default function TimeCard({
   timezone,
   name,
   city,
-  isMe = false, // 기본값 false
+  isMe = false,
 }: {
   timezone: string;
   name: string;
   city: string;
-  isMe?: boolean; // prop 추가
+  isMe?: boolean;
 }) {
   const [time, setTime] = useState("");
 
   useEffect(() => {
     const updateTime = () => {
-      const formatted = new Intl.DateTimeFormat("ko-KR", {
+      const formatted = new Intl.DateTimeFormat("en-CA", {
         timeZone: timezone,
         hour: "2-digit",
         minute: "2-digit",
@@ -33,7 +33,6 @@ export default function TimeCard({
   }, [timezone]);
 
   return (
-    // isMe가 true면 테두리를 파란색으로 강조
     <div
       className={`bg-white p-6 rounded-3xl shadow-sm border transition-all duration-300 transform hover:-translate-y-1 
       ${
@@ -47,7 +46,7 @@ export default function TimeCard({
           <h2 className="text-2xl font-bold text-gray-900">
             {name}{" "}
             {isMe && (
-              <span className="text-sm font-normal text-blue-600">(나)</span>
+              <span className="text-sm font-normal text-blue-600">(You)</span>
             )}
           </h2>
           <p className="text-blue-600 font-medium mt-1">{city}</p>

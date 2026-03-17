@@ -16,7 +16,7 @@ export default function FormPage({
   onSubmit,
   children,
   submitLabel,
-  submitLoadingLabel = "저장 중...",
+  submitLoadingLabel = "Saving...",
   loading = false,
 }: FormPageProps) {
   return (

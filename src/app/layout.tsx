@@ -3,8 +3,8 @@ import Navbar from "@/components/NavigationBar";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "TimeZone | 글로벌 일정 관리",
-  description: "타임존 변환 고민 없이 친구와 일정을 잡으세요.",
+  title: "TimeZone | Plan across time zones",
+  description: "Schedule with friends around the world without worrying about time zones.",
 };
 
 export default function RootLayout({
@@ -13,7 +13,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ko">
+    <html lang="en">
       <body>
         <Navbar />
         <main className="min-h-screen">{children}</main>

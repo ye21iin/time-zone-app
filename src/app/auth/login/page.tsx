@@ -19,7 +19,7 @@ export default function LoginPage() {
         onClick={handleGoogleLogin}
         className="border border-gray-300 p-4 rounded-lg shadow-sm hover:bg-gray-500"
       >
-        Google로 로그인하기
+        Continue with Google
       </button>
     </div>
   );
