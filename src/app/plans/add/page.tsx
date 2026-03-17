@@ -17,12 +17,5 @@ export default async function AddPlanPage() {
     .select("*")
     .eq("user_id", user.id);
 
-  return (
-    <main className="min-h-screen bg-gray-50 p-8">
-      <div className="max-w-xl mx-auto">
-        <h1 className="text-2xl font-bold mb-6">새 일정 추가</h1>
-        <AddPlanForm friends={friends || []} />
-      </div>
-    </main>
-  );
+  return <AddPlanForm friends={friends || []} />;
 }
