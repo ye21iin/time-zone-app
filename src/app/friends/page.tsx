@@ -47,6 +47,8 @@ export default async function FriendsPage() {
           friends.map((friend) => (
             <div key={friend.id} className="relative group">
               <TimeCard
+                friendId={friend.id}
+                editableName
                 name={friend.name}
                 city={friend.city}
                 timezone={friend.city_timezone}
