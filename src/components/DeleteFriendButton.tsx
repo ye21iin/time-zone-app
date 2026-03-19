@@ -36,7 +36,7 @@ export default function DeleteFriendButton({
   return (
     <button
       onClick={handleDelete}
-      className="text-xs font-medium text-gray-400 hover:text-red-500 transition-colors px-2 py-1 rounded hover:bg-red-50"
+      className="text-xs font-medium text-gray-400 hover:text-red-500 transition-colors duration-100 ease-out px-2 py-1 rounded hover:bg-red-50"
     >
       Delete
     </button>

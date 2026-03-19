@@ -52,7 +52,7 @@ export default async function FriendsPage() {
                 timezone={friend.city_timezone}
               />
 
-              <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-end gap-1">
+              <div className="absolute bottom-4 right-4 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-75 ease-out flex flex-col items-end gap-1">
                 <DeleteFriendButton friendId={friend.id} name={friend.name} />
               </div>
             </div>

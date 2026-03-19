@@ -34,11 +34,11 @@ export default function TimeCard({
 
   return (
     <div
-      className={`bg-white p-6 rounded-3xl shadow-sm border transition-all duration-300 transform hover:-translate-y-1 
+      className={`bg-white p-6 rounded-3xl shadow-sm border transition-all duration-300 transform hover:-translate-y-1 group-hover:-translate-y-1 
       ${
         isMe
           ? "border-blue-500 ring-2 ring-blue-100"
-          : "border-gray-100 hover:shadow-xl"
+          : "border-gray-100 hover:shadow-xl group-hover:shadow-xl"
       }`}
     >
       <div className="flex justify-between items-start">
