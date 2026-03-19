@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import LogoutButton from "./LogoutBtn";
+import MobileNavMenu from "./MobileNavMenu";
 
 export default async function Navbar() {
   const supabase = await createClient();
@@ -33,11 +34,15 @@ export default async function Navbar() {
                     + New plan
                   </Link>
                 </div>
-                <div className="h-6 w-px bg-gray-200" />
-                <span className="text-xs text-gray-400 truncate max-w-[200px]">
+                <MobileNavMenu email={user.email ?? ""} />
+
+                <div className="hidden md:block h-6 w-px bg-gray-200" />
+                <span className="hidden md:inline text-xs text-gray-400 truncate max-w-[200px]">
                   {user.email}
                 </span>
-                <LogoutButton />
+                <div className="hidden md:block">
+                  <LogoutButton />
+                </div>
               </>
             ) : (
               <Link
