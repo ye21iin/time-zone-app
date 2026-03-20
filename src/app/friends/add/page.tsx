@@ -1,9 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import FormPage from "@/components/form/FormPage";
+import TimeZoneComboBox from "@/components/TimeZoneComboBox";
+
+function deriveCityFromTimeZone(timezone: string) {
+  const last = timezone.split("/").filter(Boolean).pop();
+  if (!last) return "";
+  // e.g. Los_Angeles -> Los Angeles
+  return last.replace(/_/g, " ");
+}
 
 export default function AddFriendPage() {
   const [name, setName] = useState("");
@@ -14,7 +22,16 @@ export default function AddFriendPage() {
   const supabase = createClient();
   const router = useRouter();
 
-  const timeZones = Intl.supportedValuesOf("timeZone").sort();
+  const timeZones = useMemo(
+    () => Intl.supportedValuesOf("timeZone").sort(),
+    [],
+  );
+
+  const handleTimezoneChange = (nextTimezone: string) => {
+    setTimezone(nextTimezone);
+    // Timezone 선택만으로 친구 카드 라벨용 city를 자동 제안.
+    setCity(deriveCityFromTimeZone(nextTimezone));
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -30,10 +47,12 @@ export default function AddFriendPage() {
       return;
     }
 
+    const cityToUse = city.trim() || deriveCityFromTimeZone(timezone);
+
     const { error } = await supabase.from("friends").insert([
       {
         name,
-        city,
+        city: cityToUse,
         city_timezone: timezone,
         user_id: user.id,
       },
@@ -72,9 +91,16 @@ export default function AddFriendPage() {
         />
       </div>
 
+      <TimeZoneComboBox
+        label="Time zone"
+        value={timezone}
+        onChange={handleTimezoneChange}
+        timeZones={timeZones}
+      />
+
       <div>
         <label className="block text-sm font-semibold text-gray-700 mb-2">
-          City
+          City <span className="text-gray-400 font-normal">(optional)</span>
         </label>
         <input
           type="text"
@@ -84,33 +110,7 @@ export default function AddFriendPage() {
           }
           className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all text-gray-900 placeholder:text-gray-400"
           placeholder="e.g. Tokyo"
-          required
         />
-      </div>
-
-      <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-2">
-          Time zone
-        </label>
-        <select
-          value={timezone}
-          onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-            setTimezone(e.target.value)
-          }
-          className={`w-full p-3 border border-gray-200 rounded-xl bg-white focus:ring-2 focus:ring-blue-500 outline-none cursor-pointer transition-all ${
-            timezone ? "text-gray-900" : "text-gray-400"
-          }`}
-          required
-        >
-          <option value="" disabled>
-            Select a time zone
-          </option>
-          {timeZones.map((tz) => (
-            <option key={tz} value={tz} className="text-gray-900">
-              {tz}
-            </option>
-          ))}
-        </select>
       </div>
     </FormPage>
   );
