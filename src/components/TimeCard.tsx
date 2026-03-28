@@ -91,14 +91,15 @@ export default function TimeCard({
 
   return (
     <div
-      className={`bg-white p-6 rounded-3xl shadow-sm border transition-all duration-300 transform hover:-translate-y-1 group-hover:-translate-y-1 
-      ${
-        isMe
-          ? "border-blue-500 ring-2 ring-blue-100"
-          : "border-gray-100 hover:shadow-xl group-hover:shadow-xl"
-      }`}
+      className={`flex flex-col h-full bg-white p-8 rounded-3xl shadow-sm border transition-all duration-300 transform hover:-translate-y-1 group-hover:-translate-y-1 
+    ${
+      isMe
+        ? "border-blue-500 ring-4 ring-blue-50"
+        : "border-gray-100 hover:shadow-xl group-hover:shadow-xl"
+    }`}
     >
-      <div className="flex justify-between items-start">
+      {/* 상단 섹션: 이름, 도시, 아이콘 */}
+      <div className="flex justify-between items-start mb-auto">
         <div>
           <h2 className="text-2xl font-bold text-gray-900">
             {isEditing ? (
@@ -112,27 +113,24 @@ export default function TimeCard({
                 }}
                 autoFocus
                 disabled={isSaving}
-                aria-label="Edit friend name"
                 className="w-full max-w-[18ch] rounded-md border border-gray-200 bg-white px-2 py-1 text-2xl font-bold text-gray-900 outline-none focus-visible:ring-2 focus-visible:ring-blue-500 disabled:opacity-60"
               />
             ) : (
               <span className="inline-flex items-center gap-2">
                 <span
                   onDoubleClick={startEditing}
-                  className={canEditName ? "cursor-text select-text" : undefined}
-                  title={canEditName ? "Double-click to edit" : undefined}
+                  className={
+                    canEditName ? "cursor-text select-text" : undefined
+                  }
                 >
-                  {displayName}{" "}
+                  {displayName}
                 </span>
-                {canEditName ? (
+                {canEditName && (
                   <button
-                    type="button"
                     onClick={startEditing}
-                    aria-label="Edit name"
-                    className="inline-flex items-center justify-center rounded p-1 text-gray-300 hover:text-gray-500 hover:bg-gray-50 transition-colors md:opacity-0 md:group-hover:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                    className="inline-flex items-center justify-center rounded p-1 text-gray-300 hover:text-gray-500 hover:bg-gray-50 transition-colors md:opacity-0 md:group-hover:opacity-100"
                   >
                     <svg
-                      aria-hidden="true"
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
@@ -145,28 +143,40 @@ export default function TimeCard({
                       <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z" />
                     </svg>
                   </button>
-                ) : null}
+                )}
               </span>
             )}
             {isMe && (
-              <span className="text-sm font-normal text-blue-600">(You)</span>
+              <span className="text-sm font-normal text-blue-600 ml-2">
+                (You)
+              </span>
             )}
           </h2>
           <p className="text-blue-600 font-medium mt-1">{city}</p>
         </div>
-        <div className="bg-blue-50 p-2 rounded-full">
+
+        <div className="bg-blue-50 p-2 rounded-full shrink-0">
           <span className="text-2xl">{isMe ? "🏠" : "🕒"}</span>
         </div>
       </div>
 
-      <div className="mt-6 pt-6 border-t border-gray-100">
-        <p className="text-4xl font-bold text-gray-800 tracking-tight">
+      {/* 하단 섹션: 시간 및 타임존 */}
+      <div className="mt-8 pt-8 border-t border-gray-100">
+        <p className="text-4xl font-bold text-gray-900 tracking-tight font-mono">
           {time || "Loading..."}
         </p>
-        <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mt-4">
-          Timezone
-        </p>
-        <p className="text-sm font-mono text-gray-600 mt-1">{timezone}</p>
+
+        <div className="mt-4">
+          <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+            Timezone
+          </p>
+          <p
+            className="text-sm font-medium text-gray-500 mt-1 truncate"
+            title={timezone}
+          >
+            {timezone}
+          </p>
+        </div>
       </div>
     </div>
   );
