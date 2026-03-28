@@ -28,7 +28,7 @@ export default async function FriendsPage() {
       <div className="max-w-5xl mx-auto space-y-12">
         {/* 내 시간 섹션 */}
         <section>
-          <h2 className="text-xl font-bold text-gray-700 mb-6 uppercase tracking-wider text-sm">
+          <h2 className="text-xl font-bold text-gray-700 mb-6 uppercase tracking-wider">
             My Current Location
           </h2>
           {/* Grid 시스템을 활용해 '내 카드'도 친구 카드와 동일한 너비를 갖게 함 */}
@@ -47,10 +47,10 @@ export default async function FriendsPage() {
         {/* 친구 목록 섹션 */}
         <section>
           <div className="flex justify-between items-center mb-8">
-            <h1 className="text-3xl font-extrabold text-gray-900">Friends</h1>
-            <PrimaryLinkButton href="/friends/add">
-              + Add friend
-            </PrimaryLinkButton>
+            <h1 className="text-3xl font-extrabold text-gray-900 uppercase tracking-wide">
+              Friends
+            </h1>
+            <PrimaryLinkButton href="/friends/add">+ Add</PrimaryLinkButton>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
