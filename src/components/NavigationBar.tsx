@@ -11,7 +11,7 @@ export default async function Navbar() {
 
   return (
     <nav className="border-b bg-white sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           <Link href="/" className="text-xl font-bold text-blue-600">
             🌍 TimeZone
