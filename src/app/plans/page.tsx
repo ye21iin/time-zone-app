@@ -23,12 +23,8 @@ export default async function PlansPage() {
     <main className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-4xl mx-auto">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">
-            My plans (Vancouver time)
-          </h1>
-          <PrimaryLinkButton href="/plans/add">
-            + New plan
-          </PrimaryLinkButton>
+          <h1 className="text-3xl font-bold text-gray-900">My plans</h1>
+          <PrimaryLinkButton href="/plans/add">+ New</PrimaryLinkButton>
         </div>
 
         <div className="space-y-4">
@@ -69,13 +65,13 @@ export default async function PlansPage() {
                 </div>
               );
             })
-            ) : (
-              <div className="text-center py-20 bg-white rounded-3xl border-2 border-dashed border-gray-200">
-                <p className="text-gray-400">
-                  You don&apos;t have any plans yet. Create your first one!
-                </p>
-              </div>
-            )}
+          ) : (
+            <div className="text-center py-20 bg-white rounded-3xl border-2 border-dashed border-gray-200">
+              <p className="text-gray-400">
+                You don&apos;t have any plans yet. Create your first one!
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </main>
