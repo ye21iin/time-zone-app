@@ -91,17 +91,17 @@ export default function TimeCard({
 
   return (
     <div
-      className={`flex flex-col h-full bg-white p-8 rounded-3xl shadow-sm border transition-all duration-300 transform hover:-translate-y-1 group-hover:-translate-y-1 
+      className={`flex h-full transform flex-col rounded-3xl border bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 group-hover:-translate-y-1 dark:bg-slate-900 
     ${
       isMe
-        ? "border-blue-500 ring-4 ring-blue-50"
-        : "border-gray-100 hover:shadow-xl group-hover:shadow-xl"
+        ? "border-blue-500 ring-4 ring-blue-50 dark:ring-blue-950/50"
+        : "border-gray-100 hover:shadow-xl group-hover:shadow-xl dark:border-slate-800"
     }`}
     >
       {/* 상단 섹션: 이름, 도시, 아이콘 */}
       <div className="flex justify-between items-start mb-auto">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-slate-100">
             {isEditing ? (
               <input
                 value={draftName}
@@ -113,7 +113,7 @@ export default function TimeCard({
                 }}
                 autoFocus
                 disabled={isSaving}
-                className="w-full max-w-[18ch] rounded-md border border-gray-200 bg-white px-2 py-1 text-2xl font-bold text-gray-900 outline-none focus-visible:ring-2 focus-visible:ring-blue-500 disabled:opacity-60"
+                className="w-full max-w-[18ch] rounded-md border border-gray-200 bg-white px-2 py-1 text-2xl font-bold text-gray-900 outline-none focus-visible:ring-2 focus-visible:ring-blue-500 disabled:opacity-60 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
               />
             ) : (
               <span className="inline-flex items-center gap-2">
@@ -128,7 +128,7 @@ export default function TimeCard({
                 {canEditName && (
                   <button
                     onClick={startEditing}
-                    className="inline-flex items-center justify-center rounded p-1 text-gray-300 hover:text-gray-500 hover:bg-gray-50 transition-colors md:opacity-0 md:group-hover:opacity-100"
+                    className="inline-flex items-center justify-center rounded p-1 text-gray-300 transition-colors hover:bg-gray-50 hover:text-gray-500 md:opacity-0 md:group-hover:opacity-100 dark:text-slate-500 dark:hover:bg-slate-800 dark:hover:text-slate-300"
                   >
                     <svg
                       viewBox="0 0 24 24"
@@ -147,31 +147,31 @@ export default function TimeCard({
               </span>
             )}
             {isMe && (
-              <span className="text-sm font-normal text-blue-600 ml-2">
+              <span className="ml-2 text-sm font-normal text-blue-600 dark:text-blue-400">
                 (You)
               </span>
             )}
           </h2>
-          <p className="text-blue-600 font-medium mt-1">{city}</p>
+          <p className="mt-1 font-medium text-blue-600 dark:text-blue-400">{city}</p>
         </div>
 
-        <div className="bg-blue-50 p-2 rounded-full shrink-0">
+        <div className="shrink-0 rounded-full bg-blue-50 p-2 dark:bg-blue-950/50">
           <span className="text-2xl">{isMe ? "🏠" : "🕒"}</span>
         </div>
       </div>
 
       {/* 하단 섹션: 시간 및 타임존 */}
-      <div className="mt-8 pt-8 border-t border-gray-100">
-        <p className="text-4xl font-bold text-gray-900 tracking-tight font-mono">
+      <div className="mt-8 border-t border-gray-100 pt-8 dark:border-slate-800">
+        <p className="font-mono text-4xl font-bold tracking-tight text-gray-900 dark:text-slate-100">
           {time || "Loading..."}
         </p>
 
         <div className="mt-4">
-          <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+          <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 dark:text-slate-500">
             Timezone
           </p>
           <p
-            className="text-sm font-medium text-gray-500 mt-1 truncate"
+            className="mt-1 truncate text-sm font-medium text-gray-500 dark:text-slate-400"
             title={timezone}
           >
             {timezone}

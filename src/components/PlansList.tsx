@@ -30,27 +30,27 @@ export default function PlansList({ initialPlans }: { initialPlans: Plan[] }) {
         return (
           <div
             key={plan.id}
-            className="group bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex justify-between items-start gap-6 transition-all hover:shadow-md"
+            className="group flex items-start justify-between gap-6 rounded-2xl border border-gray-100 bg-white p-6 shadow-sm transition-all hover:shadow-md dark:border-slate-800 dark:bg-slate-900"
           >
             <div className="flex-1 min-w-0">
-              <h3 className="text-xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors">
+              <h3 className="text-xl font-bold text-gray-800 transition-colors group-hover:text-blue-600 dark:text-slate-100 dark:group-hover:text-blue-400">
                 {plan.title}
               </h3>
               <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                <div className="rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3">
-                  <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-blue-500">
+                <div className="rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 dark:border-blue-900/60 dark:bg-blue-950/40">
+                  <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-blue-500 dark:text-blue-300">
                     {USER_CITY}
                   </p>
-                  <p className="mt-1 text-sm font-semibold text-gray-900">
+                  <p className="mt-1 text-sm font-semibold text-gray-900 dark:text-slate-100">
                     {vancouverTime}
                   </p>
                 </div>
 
-                <div className="rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3">
-                  <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-gray-500">
+                <div className="rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 dark:border-slate-700 dark:bg-slate-800">
+                  <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-gray-500 dark:text-slate-400">
                     {plan.city || "Event local time"}
                   </p>
-                  <p className="mt-1 text-sm font-semibold text-gray-900">
+                  <p className="mt-1 text-sm font-semibold text-gray-900 dark:text-slate-100">
                     {localPlanTime || "Local timezone not set yet"}
                   </p>
                 </div>
@@ -63,7 +63,7 @@ export default function PlansList({ initialPlans }: { initialPlans: Plan[] }) {
                 {/* 📝 수정 버튼 */}
                 <button
                   onClick={() => setEditingPlan(plan)}
-                  className="p-2 text-gray-400 hover:text-blue-500 hover:bg-blue-50 rounded-xl transition-all"
+                  className="rounded-xl p-2 text-gray-400 transition-all hover:bg-blue-50 hover:text-blue-500 dark:text-slate-500 dark:hover:bg-blue-950/50 dark:hover:text-blue-300"
                   title="Edit plan"
                 >
                   <svg

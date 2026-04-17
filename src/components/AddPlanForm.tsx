@@ -113,14 +113,14 @@ export default function AddPlanForm({ friends }: { friends: Friend[] }) {
       loading={loading}
     >
       <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-2">
+        <label className="mb-2 block text-sm font-semibold text-gray-700 dark:text-slate-300">
           Title
         </label>
         <input
           type="text"
           value={title}
           required
-          className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all text-gray-900 placeholder:text-gray-400"
+          className="w-full rounded-xl border border-gray-200 p-3 text-gray-900 outline-none transition-all placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder:text-slate-500"
           placeholder="e.g. Team meeting"
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setTitle(e.target.value)
@@ -130,14 +130,14 @@ export default function AddPlanForm({ friends }: { friends: Friend[] }) {
 
       <div className="flex gap-4">
         <div className="flex-1">
-          <label className="block text-sm font-semibold text-gray-700 mb-2">
+          <label className="mb-2 block text-sm font-semibold text-gray-700 dark:text-slate-300">
             Date
           </label>
           <input
             type="date"
             value={date}
             required
-            className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all text-gray-900"
+            className="w-full rounded-xl border border-gray-200 p-3 text-gray-900 outline-none transition-all focus:ring-2 focus:ring-blue-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setDate(e.target.value)
             }
@@ -151,7 +151,7 @@ export default function AddPlanForm({ friends }: { friends: Friend[] }) {
                 className={`rounded-full px-3 py-1 text-xs font-semibold transition-all ${
                   date === option.value
                     ? "bg-blue-600 text-white"
-                    : "bg-blue-50 text-blue-700 hover:bg-blue-100"
+                    : "bg-blue-50 text-blue-700 hover:bg-blue-100 dark:bg-blue-950/50 dark:text-blue-300 dark:hover:bg-blue-900/70"
                 }`}
               >
                 {option.label}
@@ -160,14 +160,14 @@ export default function AddPlanForm({ friends }: { friends: Friend[] }) {
           </div>
         </div>
         <div className="flex-1">
-          <label className="block text-sm font-semibold text-gray-700 mb-2">
+          <label className="mb-2 block text-sm font-semibold text-gray-700 dark:text-slate-300">
             Time
           </label>
           <input
             type="time"
             value={time}
             required
-            className="w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all text-gray-900"
+            className="w-full rounded-xl border border-gray-200 p-3 text-gray-900 outline-none transition-all focus:ring-2 focus:ring-blue-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setTime(e.target.value)
             }
@@ -181,14 +181,14 @@ export default function AddPlanForm({ friends }: { friends: Friend[] }) {
                 className={`rounded-full px-3 py-1 text-xs font-semibold transition-all ${
                   time === option.value
                     ? "bg-gray-900 text-white"
-                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
                 }`}
               >
                 {option.label}
               </button>
             ))}
           </div>
-          <p className="mt-2 text-xs text-gray-500">
+          <p className="mt-2 text-xs text-gray-500 dark:text-slate-400">
             Closest time picks the next 30-minute time from now.
           </p>
         </div>
@@ -203,13 +203,13 @@ export default function AddPlanForm({ friends }: { friends: Friend[] }) {
           options={timeZoneOptions}
           placeholder="Search a city, friend, or time zone"
         />
-        <div className="mt-3 space-y-1 rounded-2xl border border-gray-100 bg-gray-50 px-4 py-3">
-          <p className="text-xs text-gray-500">
+        <div className="mt-3 space-y-1 rounded-2xl border border-gray-100 bg-gray-50 px-4 py-3 dark:border-slate-800 dark:bg-slate-900">
+          <p className="text-xs text-gray-500 dark:text-slate-400">
             {timezone
               ? `Saved as ${timezoneToUse} local time`
               : `If you leave this empty, we will use your browser timezone: ${timezoneToUse}`}
           </p>
-          <p className="text-sm font-medium text-gray-900">
+          <p className="text-sm font-medium text-gray-900 dark:text-slate-100">
             Event city: {selectedCity}
           </p>
         </div>

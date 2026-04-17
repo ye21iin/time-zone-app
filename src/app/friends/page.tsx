@@ -23,12 +23,12 @@ export default async function FriendsPage() {
     .eq("user_id", user.id);
 
   return (
-    <main className="min-h-screen bg-gray-50 p-8 md:p-12">
+    <main className="min-h-screen bg-gray-50 p-8 dark:bg-slate-950 md:p-12">
       {/* 모든 콘텐츠를 감싸는 중앙 정렬 컨테이너 (Navbar와 동일한 5xl) */}
       <div className="max-w-5xl mx-auto space-y-12">
         {/* 내 시간 섹션 */}
         <section>
-          <h2 className="text-xl font-bold text-gray-700 mb-6 uppercase tracking-wider">
+          <h2 className="mb-6 text-xl font-bold uppercase tracking-wider text-gray-700 dark:text-slate-300">
             My Current Location
           </h2>
           {/* Grid 시스템을 활용해 '내 카드'도 친구 카드와 동일한 너비를 갖게 함 */}
@@ -42,12 +42,12 @@ export default async function FriendsPage() {
           </div>
         </section>
 
-        <hr className="border-gray-200" />
+        <hr className="border-gray-200 dark:border-slate-800" />
 
         {/* 친구 목록 섹션 */}
         <section>
           <div className="flex justify-between items-center mb-8">
-            <h1 className="text-3xl font-extrabold text-gray-900 uppercase tracking-wide">
+            <h1 className="text-3xl font-extrabold uppercase tracking-wide text-gray-900 dark:text-slate-100">
               Friends
             </h1>
             <PrimaryLinkButton href="/friends/add">+ Add</PrimaryLinkButton>
@@ -74,7 +74,7 @@ export default async function FriendsPage() {
                 </div>
               ))
             ) : (
-              <p className="text-gray-500 col-span-full py-12 text-center bg-white rounded-3xl border border-dashed border-gray-300">
+              <p className="col-span-full rounded-3xl border border-dashed border-gray-300 bg-white py-12 text-center text-gray-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400">
                 No friends added yet. Start by adding a friend!
               </p>
             )}

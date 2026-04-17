@@ -66,7 +66,7 @@ export default function MobileNavMenu({ email }: { email: string }) {
         aria-expanded={open}
         aria-controls={menuId}
         onClick={() => setOpen((v) => !v)}
-        className="inline-flex items-center justify-center rounded-md p-2 text-gray-700 hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+        className="inline-flex items-center justify-center rounded-md p-2 text-gray-700 hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:text-slate-200 dark:hover:bg-slate-900"
       >
         <span className="sr-only">Open menu</span>
         <HamburgerIcon open={open} />
@@ -77,13 +77,13 @@ export default function MobileNavMenu({ email }: { email: string }) {
           id={menuId}
           role="menu"
           aria-label="Mobile navigation"
-          className="absolute right-0 mt-2 w-60 rounded-lg border bg-white shadow-lg p-2"
+          className="absolute right-0 mt-2 w-60 rounded-lg border border-gray-200 bg-white p-2 shadow-lg dark:border-slate-800 dark:bg-slate-950"
         >
           <Link
             href="/friends"
             role="menuitem"
             onClick={() => setOpen(false)}
-            className="block rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-50"
+            className="block rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 dark:text-slate-200 dark:hover:bg-slate-900"
           >
             Friends
           </Link>
@@ -91,7 +91,7 @@ export default function MobileNavMenu({ email }: { email: string }) {
             href="/plans"
             role="menuitem"
             onClick={() => setOpen(false)}
-            className="block rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-50"
+            className="block rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 dark:text-slate-200 dark:hover:bg-slate-900"
           >
             Plans
           </Link>
@@ -99,14 +99,14 @@ export default function MobileNavMenu({ email }: { email: string }) {
             href="/plans/add"
             role="menuitem"
             onClick={() => setOpen(false)}
-            className="block rounded-md px-3 py-2 text-sm font-medium text-blue-700 hover:bg-blue-50"
+            className="block rounded-md px-3 py-2 text-sm font-medium text-blue-700 hover:bg-blue-50 dark:text-blue-300 dark:hover:bg-blue-950/60"
           >
             + New plan
           </Link>
 
-          <div className="my-2 h-px bg-gray-100" />
+          <div className="my-2 h-px bg-gray-100 dark:bg-slate-800" />
           <div className="px-3 py-2">
-            <div className="text-xs text-gray-500 truncate">{email}</div>
+            <div className="truncate text-xs text-gray-500 dark:text-slate-400">{email}</div>
             <div className="mt-2">
               <LogoutButton />
             </div>
@@ -116,4 +116,3 @@ export default function MobileNavMenu({ email }: { email: string }) {
     </div>
   );
 }
-

@@ -18,10 +18,10 @@ export default async function PlansPage() {
     .order("start_time", { ascending: true });
 
   return (
-    <main className="min-h-screen bg-gray-50 p-8">
+    <main className="min-h-screen bg-gray-50 p-8 dark:bg-slate-950">
       <div className="max-w-4xl mx-auto">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 uppercase tracking-tight">
+          <h1 className="text-3xl font-bold uppercase tracking-tight text-gray-900 dark:text-slate-100">
             My plans
           </h1>
           <PrimaryLinkButton href="/plans/add">+ New</PrimaryLinkButton>
@@ -31,8 +31,8 @@ export default async function PlansPage() {
         {plans && plans.length > 0 ? (
           <PlansList initialPlans={plans} />
         ) : (
-          <div className="text-center py-20 bg-white rounded-3xl border-2 border-dashed border-gray-200">
-            <p className="text-gray-400">
+          <div className="rounded-3xl border-2 border-dashed border-gray-200 bg-white py-20 text-center dark:border-slate-800 dark:bg-slate-900">
+            <p className="text-gray-400 dark:text-slate-500">
               You don&apos;t have any plans yet. Create your first one!
             </p>
           </div>

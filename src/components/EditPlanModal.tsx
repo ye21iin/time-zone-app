@@ -69,12 +69,12 @@ export default function EditPlanModal({ plan, onClose }: EditPlanModalProps) {
   return (
     // 1. 모달 오버레이 (배경 클릭 시 닫기)
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm animate-in fade-in duration-200"
       onClick={onClose}
     >
       {/* 2. 모달 컨텐츠 박스 (내부 클릭 시 이벤트 전파 차단) */}
       <div
-        className="bg-white w-full max-w-lg rounded-[28px] overflow-hidden shadow-2xl ring-1 ring-black/5 animate-in zoom-in duration-200"
+        className="w-full max-w-lg overflow-hidden rounded-[28px] bg-white shadow-2xl ring-1 ring-black/5 animate-in zoom-in duration-200 dark:bg-slate-900 dark:ring-white/10"
         onClick={(e) => e.stopPropagation()}
       >
         <FormPage
@@ -88,32 +88,32 @@ export default function EditPlanModal({ plan, onClose }: EditPlanModalProps) {
           {/* 3. FormPage의 children으로 입력 필드들 구성 */}
           <div className="space-y-5">
             <div className="space-y-2">
-              <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-[0.18em]">
+              <label className="block text-[11px] font-bold uppercase tracking-[0.18em] text-gray-500 dark:text-slate-400">
                 Plan Title
               </label>
               <input
                 name="title"
                 defaultValue={plan.title}
                 placeholder="e.g. Lunch with Erine"
-                className="w-full rounded-2xl border border-gray-200 bg-gray-50/70 px-4 py-3 text-base font-semibold text-gray-900 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-100"
+                className="w-full rounded-2xl border border-gray-200 bg-gray-50/70 px-4 py-3 text-base font-semibold text-gray-900 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:bg-slate-900 dark:focus:ring-blue-950"
                 required
                 autoFocus
               />
             </div>
 
             <div className="space-y-2">
-              <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-[0.18em]">
+              <label className="block text-[11px] font-bold uppercase tracking-[0.18em] text-gray-500 dark:text-slate-400">
                 City
               </label>
               <input
                 name="city"
                 value={city}
                 placeholder="e.g. Vancouver"
-                className="w-full rounded-2xl border border-gray-200 bg-gray-50/70 px-4 py-3 text-base font-medium text-gray-900 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-100"
+                className="w-full rounded-2xl border border-gray-200 bg-gray-50/70 px-4 py-3 text-base font-medium text-gray-900 outline-none transition-all placeholder:text-gray-500 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:bg-slate-900 dark:focus:ring-blue-950"
                 required
                 onChange={(e) => setCity(e.target.value)}
               />
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-gray-500 dark:text-slate-400">
                 {guessedTimezone
                   ? `Saved as ${guessedTimezone} local time`
                   : "Enter a city name that maps clearly to a timezone"}
@@ -121,7 +121,7 @@ export default function EditPlanModal({ plan, onClose }: EditPlanModalProps) {
             </div>
 
             <div className="space-y-2">
-              <label className="block text-[11px] font-bold text-gray-500 uppercase tracking-[0.18em]">
+              <label className="block text-[11px] font-bold uppercase tracking-[0.18em] text-gray-500 dark:text-slate-400">
                 Start Time
               </label>
               <input
@@ -135,7 +135,7 @@ export default function EditPlanModal({ plan, onClose }: EditPlanModalProps) {
                       )
                     : ""
                 }
-                className="w-full rounded-2xl border border-gray-200 bg-gray-50/70 px-4 py-3 text-base font-medium text-gray-900 outline-none transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-100"
+                className="w-full rounded-2xl border border-gray-200 bg-gray-50/70 px-4 py-3 text-base font-medium text-gray-900 outline-none transition-all focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:focus:bg-slate-900 dark:focus:ring-blue-950"
                 required
               />
             </div>
@@ -145,7 +145,7 @@ export default function EditPlanModal({ plan, onClose }: EditPlanModalProps) {
         {/* 4. 하단 취소 버튼 (선택 사항) */}
         <button
           onClick={onClose}
-          className="w-full border-t border-gray-100 px-6 py-4 text-sm font-semibold text-gray-500 hover:bg-gray-50 hover:text-gray-700 transition-all"
+          className="w-full border-t border-gray-100 px-6 py-4 text-sm font-semibold text-gray-500 transition-all hover:bg-gray-50 hover:text-gray-700 dark:border-slate-800 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200"
         >
           Cancel and Close
         </button>

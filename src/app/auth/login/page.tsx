@@ -14,10 +14,10 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex h-[calc(100vh-4rem)] items-center justify-center bg-gray-50 dark:bg-slate-950">
       <button
         onClick={handleGoogleLogin}
-        className="border border-gray-300 p-4 rounded-lg shadow-sm hover:bg-gray-500"
+        className="rounded-lg border border-gray-300 bg-white p-4 text-gray-900 shadow-sm hover:bg-gray-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800"
       >
         Continue with Google
       </button>

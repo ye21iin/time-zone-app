@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
+import Footer from "@/components/Footer";
 import Navbar from "@/components/NavigationBar";
 import "./globals.css";
 
@@ -11,16 +13,23 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const cookieStore = await cookies();
+  const themeCookie = cookieStore.get("theme")?.value;
+  const theme = themeCookie === "dark" ? "dark" : "light";
+
   return (
-    <html lang="en">
-      <body>
+    <html lang="en" className={theme === "dark" ? "dark" : undefined} data-theme={theme}>
+      <body className="min-h-screen bg-background text-foreground">
         <Navbar />
-        <main className="min-h-screen">{children}</main>
+        <div className="flex min-h-screen flex-col">
+          <main className="flex-1">{children}</main>
+          <Footer initialTheme={theme} />
+        </div>
       </body>
     </html>
   );
