@@ -36,9 +36,26 @@ export default function DeleteFriendButton({
   return (
     <button
       onClick={handleDelete}
-      className="text-xs font-medium text-gray-400 hover:text-red-500 transition-colors duration-100 ease-out px-2 py-1 rounded hover:bg-red-50"
+      type="button"
+      title={`Delete ${name}`}
+      aria-label={`Delete ${name}`}
+      className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all"
     >
-      Delete
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="w-5 h-5"
+      >
+        <path d="M3 6h18" />
+        <path d="M8 6V4h8v2" />
+        <path d="M19 6l-1 14H6L5 6" />
+        <path d="M10 11v6" />
+        <path d="M14 11v6" />
+      </svg>
     </button>
   );
 }

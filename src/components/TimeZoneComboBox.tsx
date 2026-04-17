@@ -6,17 +6,25 @@ function normalizeTimezoneQuery(query: string) {
   return query.trim().toLowerCase();
 }
 
+type TimeZoneOption = {
+  value: string;
+  label?: string;
+  searchText?: string;
+};
+
 export default function TimeZoneComboBox({
   label,
   value,
   onChange,
   timeZones,
+  options,
   placeholder = "Search time zones (e.g. Asia/Seoul)",
 }: {
   label: string;
   value: string;
   onChange: (timezone: string) => void;
   timeZones: string[];
+  options?: TimeZoneOption[];
   placeholder?: string;
 }) {
   const [open, setOpen] = useState(false);
@@ -25,45 +33,53 @@ export default function TimeZoneComboBox({
 
   const rootRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const entries = useMemo<TimeZoneOption[]>(
+    () =>
+      options && options.length > 0
+        ? options
+        : timeZones.map((timezone) => ({ value: timezone })),
+    [options, timeZones],
+  );
 
   const filtered = useMemo(() => {
     const q = normalizeTimezoneQuery(query);
 
     const MAX_RESULTS = 20;
     if (!q) {
-      // When empty, show the selected value first (if any) and then top items.
-      const ordered: string[] = [];
-      if (value) ordered.push(value);
-      for (const tz of timeZones) {
-        if (tz === value) continue;
-        ordered.push(tz);
+      const ordered: TimeZoneOption[] = [];
+      if (value) {
+        const selected = entries.find((entry) => entry.value === value);
+        if (selected) ordered.push(selected);
+      }
+      for (const entry of entries) {
+        if (entry.value === value) continue;
+        ordered.push(entry);
         if (ordered.length >= MAX_RESULTS) break;
       }
       return ordered;
     }
 
-    const scored = timeZones
-      .map((tz) => {
-        const lower = tz.toLowerCase();
-        const idx = lower.indexOf(q);
+    const scored = entries
+      .map((entry) => {
+        const searchTarget = `${entry.value} ${entry.label ?? ""} ${entry.searchText ?? ""}`.toLowerCase();
+        const idx = searchTarget.indexOf(q);
         return idx === -1
           ? null
           : {
-              tz,
-              // Prefer prefix matches; otherwise prefer earlier matches.
-              score: (lower.startsWith(q) ? 0 : 1) * 10000 + idx,
+              entry,
+              score: (searchTarget.startsWith(q) ? 0 : 1) * 10000 + idx,
             };
       })
       .filter(
         (v): v is {
-          tz: string;
+          entry: TimeZoneOption;
           score: number;
         } => v !== null,
       )
       .sort((a, b) => a.score - b.score);
 
-    return scored.slice(0, MAX_RESULTS).map((s) => s.tz);
-  }, [query, timeZones, value]);
+    return scored.slice(0, MAX_RESULTS).map((s) => s.entry);
+  }, [entries, query, value]);
 
   useEffect(() => {
     if (!open) return;
@@ -152,7 +168,7 @@ export default function TimeZoneComboBox({
                 activeIndex >= 0 && activeIndex < filtered.length
                   ? activeIndex
                   : 0;
-              if (filtered.length > 0) selectTimezone(filtered[nextIndex]);
+              if (filtered.length > 0) selectTimezone(filtered[nextIndex].value);
               return;
             }
           }}
@@ -176,18 +192,18 @@ export default function TimeZoneComboBox({
                 No time zones found.
               </li>
             ) : (
-              filtered.map((tz, idx) => {
+              filtered.map((entry, idx) => {
                 const isActive = idx === activeIndex;
-                const isSelected = tz === value;
+                const isSelected = entry.value === value;
                 return (
                   <li
-                    key={tz}
+                    key={`${entry.value}-${entry.label ?? idx}`}
                     role="option"
                     aria-selected={isSelected}
                     onMouseDown={(e) => {
                       // Prevent input blur before selection.
                       e.preventDefault();
-                      selectTimezone(tz);
+                      selectTimezone(entry.value);
                     }}
                     onMouseEnter={() => setActiveIndex(idx)}
                     className={`px-3 py-2 text-sm cursor-pointer transition-all ${
@@ -196,7 +212,7 @@ export default function TimeZoneComboBox({
                         : "text-gray-900 hover:bg-gray-50"
                     }`}
                   >
-                    {tz}
+                    {entry.label ?? entry.value}
                   </li>
                 );
               })
@@ -207,4 +223,3 @@ export default function TimeZoneComboBox({
     </div>
   );
 }
-

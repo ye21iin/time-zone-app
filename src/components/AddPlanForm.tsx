@@ -1,10 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
-import { convertToUtc } from "@/utils/time";
+import {
+  convertToUtc,
+  deriveCityFromTimeZone,
+  formatDateInputValue,
+  getSuggestedPlanDateTime,
+} from "@/utils/time";
 import FormPage from "@/components/form/FormPage";
+import TimeZoneComboBox from "@/components/TimeZoneComboBox";
 
 interface Friend {
   id: string;
@@ -15,20 +21,55 @@ interface Friend {
 
 export default function AddPlanForm({ friends }: { friends: Friend[] }) {
   const router = useRouter();
+  const defaultDateTime = useMemo(() => getSuggestedPlanDateTime(), []);
   const [title, setTitle] = useState("");
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
+  const [date, setDate] = useState(defaultDateTime.date);
+  const [time, setTime] = useState(defaultDateTime.time);
   const [timezone, setTimezone] = useState<string>("");
   const [loading, setLoading] = useState(false);
 
-  const timeZones = Intl.supportedValuesOf("timeZone").sort();
+  const timeZones = useMemo(() => Intl.supportedValuesOf("timeZone").sort(), []);
+  const timeZoneOptions = useMemo(() => {
+    const friendOptions = friends.map((friend) => ({
+      value: friend.city_timezone,
+      label: `${friend.name} (${friend.city}) • ${friend.city_timezone}`,
+      searchText: `${friend.name} ${friend.city} ${friend.city_timezone}`,
+    }));
+    const seen = new Set(friendOptions.map((option) => option.value));
+    const timezoneOptions = timeZones
+      .filter((timezone) => !seen.has(timezone))
+      .map((timezone) => ({ value: timezone }));
+
+    return [...friendOptions, ...timezoneOptions];
+  }, [friends, timeZones]);
+  const browserTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const timezoneToUse = timezone || browserTimezone;
+  const selectedFriend = friends.find(
+    (friend) => friend.city_timezone === timezoneToUse
+  );
+  const selectedCity =
+    selectedFriend?.city || deriveCityFromTimeZone(timezoneToUse);
+  const quickDates = useMemo(() => {
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    return [
+      { label: "Today", value: formatDateInputValue(today) },
+      { label: "Tomorrow", value: formatDateInputValue(tomorrow) },
+    ];
+  }, []);
+  const quickTimes = [
+    { label: "Closest time", value: defaultDateTime.time },
+    { label: "09:00", value: "09:00" },
+    { label: "12:00", value: "12:00" },
+    { label: "18:00", value: "18:00" },
+  ];
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
 
-    const browserTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    const timezoneToUse = timezone || browserTimezone;
     if (!timezone) setTimezone(timezoneToUse);
 
     const utcDate = convertToUtc(date, time, timezoneToUse);
@@ -48,8 +89,8 @@ export default function AddPlanForm({ friends }: { friends: Friend[] }) {
       {
         user_id: user.id,
         title,
+        city: selectedCity,
         start_time: utcDate.toISOString(),
-        end_time: utcDate.toISOString(),
       },
     ]);
 
@@ -101,6 +142,22 @@ export default function AddPlanForm({ friends }: { friends: Friend[] }) {
               setDate(e.target.value)
             }
           />
+          <div className="mt-2 flex flex-wrap gap-2">
+            {quickDates.map((option) => (
+              <button
+                key={option.label}
+                type="button"
+                onClick={() => setDate(option.value)}
+                className={`rounded-full px-3 py-1 text-xs font-semibold transition-all ${
+                  date === option.value
+                    ? "bg-blue-600 text-white"
+                    : "bg-blue-50 text-blue-700 hover:bg-blue-100"
+                }`}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
         </div>
         <div className="flex-1">
           <label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -115,42 +172,47 @@ export default function AddPlanForm({ friends }: { friends: Friend[] }) {
               setTime(e.target.value)
             }
           />
+          <div className="mt-2 flex flex-wrap gap-2">
+            {quickTimes.map((option) => (
+              <button
+                key={option.label}
+                type="button"
+                onClick={() => setTime(option.value)}
+                className={`rounded-full px-3 py-1 text-xs font-semibold transition-all ${
+                  time === option.value
+                    ? "bg-gray-900 text-white"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                }`}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+          <p className="mt-2 text-xs text-gray-500">
+            Closest time picks the next 30-minute time from now.
+          </p>
         </div>
       </div>
 
-      <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-2">
-          Time zone
-        </label>
-        <select
+      <div className="space-y-3">
+        <TimeZoneComboBox
+          label="Time zone"
           value={timezone}
-          onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-            setTimezone(e.target.value)
-          }
-          className={`w-full p-3 border border-gray-200 rounded-xl bg-white focus:ring-2 focus:ring-blue-500 outline-none cursor-pointer transition-all ${
-            timezone ? "text-gray-900" : "text-gray-400"
-          }`}
-        >
-          <option value="" disabled>
-            Select a time zone
-          </option>
-          {friends.length > 0 ? (
-            <optgroup label="Friends">
-              {friends.map((f) => (
-                <option key={f.id} value={f.city_timezone} className="text-gray-900">
-                  {f.name} ({f.city})
-                </option>
-              ))}
-            </optgroup>
-          ) : null}
-          <optgroup label="All time zones">
-            {timeZones.map((tz) => (
-              <option key={tz} value={tz} className="text-gray-900">
-                {tz}
-              </option>
-            ))}
-          </optgroup>
-        </select>
+          onChange={setTimezone}
+          timeZones={timeZones}
+          options={timeZoneOptions}
+          placeholder="Search a city, friend, or time zone"
+        />
+        <div className="mt-3 space-y-1 rounded-2xl border border-gray-100 bg-gray-50 px-4 py-3">
+          <p className="text-xs text-gray-500">
+            {timezone
+              ? `Saved as ${timezoneToUse} local time`
+              : `If you leave this empty, we will use your browser timezone: ${timezoneToUse}`}
+          </p>
+          <p className="text-sm font-medium text-gray-900">
+            Event city: {selectedCity}
+          </p>
+        </div>
       </div>
     </FormPage>
   );
