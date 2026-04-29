@@ -91,7 +91,7 @@ export default function TimeCard({
 
   return (
     <div
-      className={`flex h-full transform flex-col rounded-3xl border bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 group-hover:-translate-y-1 dark:bg-slate-900 
+      className={`flex h-full transform flex-col rounded-3xl border bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 group-hover:-translate-y-1 dark:bg-slate-900 sm:p-8 
     ${
       isMe
         ? "border-blue-500 ring-4 ring-blue-50 dark:ring-blue-950/50"
@@ -161,7 +161,7 @@ export default function TimeCard({
       </div>
 
       {/* 하단 섹션: 시간 및 타임존 */}
-      <div className="mt-8 border-t border-gray-100 pt-8 dark:border-slate-800">
+      <div className="mt-6 border-t border-gray-100 pt-6 dark:border-slate-800 sm:mt-8 sm:pt-8">
         <p className="font-mono text-4xl font-bold tracking-tight text-gray-900 dark:text-slate-100">
           {time || "Loading..."}
         </p>

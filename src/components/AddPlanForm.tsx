@@ -128,8 +128,8 @@ export default function AddPlanForm({ friends }: { friends: Friend[] }) {
         />
       </div>
 
-      <div className="flex gap-4">
-        <div className="flex-1">
+      <div className="flex flex-col gap-4 sm:flex-row">
+        <div className="min-w-0 flex-1">
           <label className="mb-2 block text-sm font-semibold text-gray-700 dark:text-slate-300">
             Date
           </label>
@@ -159,7 +159,7 @@ export default function AddPlanForm({ friends }: { friends: Friend[] }) {
             ))}
           </div>
         </div>
-        <div className="flex-1">
+        <div className="min-w-0 flex-1">
           <label className="mb-2 block text-sm font-semibold text-gray-700 dark:text-slate-300">
             Time
           </label>
