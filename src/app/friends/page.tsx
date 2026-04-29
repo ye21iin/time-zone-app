@@ -20,7 +20,9 @@ export default async function FriendsPage() {
   const { data: friends } = await supabase
     .from("friends")
     .select("*")
-    .eq("user_id", user.id);
+    .eq("user_id", user.id)
+    .order("created_at", { ascending: true })
+    .order("id", { ascending: true });
 
   return (
     <main className="min-h-screen bg-gray-50 p-8 dark:bg-slate-950 md:p-12">
